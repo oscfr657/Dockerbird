@@ -1,0 +1,11 @@
+todo.txt*
+**.pyc
+.idea
+*/node_modules/
+*/npm-debug.log
+.vscode
+*__pycache__
+*/media/
+*.psql
+*.sql
+*.dump

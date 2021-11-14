@@ -1,0 +1,17 @@
+
+Django>=3.2.6
+gunicorn>=20.1.0
+psycopg2-binary>=2.9.1
+
+python-memcached>=1.3
+
+wagtail>=2.14.2
+wagtailmedia>=0.8.0
+
+
+git+https://github.com/oscfr657/Birdapp657.git@main#egg=birdapp657
+git+https://github.com/oscfr657/SEOBird657@main#egg=seobird657
+
+git+https://github.com/oscfr657/PodcastBird657@main#egg=podcastbird657
+
+git+https://github.com/oscfr657/Gallery657@main#egg=gallery657
