@@ -22,7 +22,6 @@ COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
 
-
 #########
 # FINAL #
 #########
@@ -45,14 +44,13 @@ RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apk update && apk add libpq libc-dev gcc memcached libmagic
-RUN apk update && apk add tiff-dev jpeg-dev openjpeg-dev zlib-dev freetype-dev lcms2-dev \
+RUN apk update && apk add libpq libc-dev gcc memcached libmagic \
+    tiff-dev jpeg-dev openjpeg-dev zlib-dev freetype-dev lcms2-dev \
     libwebp-dev tcl-dev tk-dev harfbuzz-dev fribidi-dev libimagequant-dev \
     libxcb-dev libpng-dev
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
+RUN pip install --upgrade pip && pip install --no-cache /wheels/*
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .

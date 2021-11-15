@@ -57,8 +57,6 @@ INSTALLED_APPS = [
 
     'wagtailmedia',
 
-    'wagtail.contrib.postgres_search',
-
     # custom
     'birdapp657',
     'seobird657',
@@ -182,6 +180,12 @@ WAGTAILIMAGES_FORMAT_CONVERSIONS = {
     'JPG': 'webp',
     'webp': 'webp',
     'png': 'webp',
+}
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.database',
+    }
 }
 
 # WAGTAIL_USAGE_COUNT_ENABLED = True

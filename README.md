@@ -29,6 +29,10 @@ A Dockerized Wagtail app
 
     docker-compose exec web python manage.py collectstatic --no-input --clear
 
+### Database migration ###
+
+    docker-compose exec web python manage.py migrate --no-input
+
 ### Search Index setup ###
 
     docker-compose exec web python manage.py update_index
@@ -42,13 +46,15 @@ A Dockerized Wagtail app
     # docker-compose down
     # -v removes volumes
 
-## Database managment ###
+## Database managment ##
 
-    docker exec -i dockerbird_db_1 /bin/bash -c "PGPASSWORD=db_password psql --username db_user db_name" < bkp.psql
+### Database export ###
 
     docker exec -i dockerbird_db_1 /bin/bash -c "pg_dump --username db_user --no-owner -x db_name" > bkp.psql
 
-    docker-compose exec web python manage.py migrate --no-input
+### Database import ###
+
+    docker exec -i dockerbird_db_1 /bin/bash -c "PGPASSWORD=db_password psql --username db_user db_name" < bkp.psql
 
 ### Clear database ####
 
