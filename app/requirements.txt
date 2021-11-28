@@ -10,8 +10,8 @@ wagtailmedia>=0.8.0
 
 
 git+https://github.com/oscfr657/Birdapp657.git@main#egg=birdapp657
-git+https://github.com/oscfr657/SEOBird657@main#egg=seobird657
+git+https://github.com/oscfr657/SEOBird657.git@main#egg=seobird657
 
-git+https://github.com/oscfr657/PodcastBird657@main#egg=podcastbird657
+git+https://github.com/oscfr657/PodcastBird657.git@main#egg=podcastbird657
 
-git+https://github.com/oscfr657/Gallery657@main#egg=gallery657
+git+https://github.com/oscfr657/Gallery657.git@main#egg=gallery657

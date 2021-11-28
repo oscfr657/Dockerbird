@@ -5,7 +5,7 @@ todo.txt*
 */npm-debug.log
 .vscode
 *__pycache__
-*/media/
+*media
 *.psql
 *.sql
 *.dump

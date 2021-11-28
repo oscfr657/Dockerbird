@@ -57,12 +57,13 @@ INSTALLED_APPS = [
 
     'wagtailmedia',
 
+    'rest_framework',
+    
     # custom
     'birdapp657',
     'seobird657',
     'podcastbird657',
 
-    'rest_framework',
     'gallery657',
 
 ]

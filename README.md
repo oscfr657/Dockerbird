@@ -19,6 +19,20 @@ A Dockerized Wagtail app
 
 ## Setup ##
 
+### Optional pre build configuration ###
+
+#### Set language ####
+
+.env
+
+    LANGUAGE_CODE=sv
+    TIME_ZONE=Europe/Stockholm
+
+.env.db
+
+    POSTGRES_INITDB_ARGS='--locale=sv_SE'
+    TZ='Europe/Stockholm'
+
 ### Build ###
 
     docker-compose build
@@ -59,6 +73,18 @@ A Dockerized Wagtail app
 ### Clear database ####
 
     docker-compose exec web python manage.py flush --no-input
+
+## Media managment ##
+
+    docker exec dockerbird_web_1 ls
+
+### Media export ###
+
+    docker cp dockerbird_web_1:/home/app/web/media .
+
+### Media import ###
+
+    docker cp media dockerbird_web_1:/home/app/web/
 
 ## Use Compose in production ##
 
