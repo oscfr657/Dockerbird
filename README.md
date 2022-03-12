@@ -35,7 +35,7 @@ A Dockerized Wagtail app
 
 ### Build ###
 
-    docker-compose build
+    docker-compose build --no-cache
 
     docker-compose up
 
