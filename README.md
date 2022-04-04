@@ -80,11 +80,11 @@ A Dockerized Wagtail app
 
 ### Media export ###
 
-    docker cp dockerbird_web_1:/home/app/web/media .
+    docker cp dockerbird_web_1:/home/app/media .
 
 ### Media import ###
 
-    docker cp media dockerbird_web_1:/home/app/web/
+    docker cp media dockerbird_web_1:/home/app/
 
 ## Use Compose in production ##
 

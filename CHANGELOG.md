@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 5 April 2022 ###
+
+    Added Django-celcery-beat with redis. Removed home/app/web mapp in docker file script.
+
 ### 12 Mar 2022 ###
 
     Added a changlog. Changed from python-memcached and MemcachedCache to pymemcache and PyMemcacheCache. Improvements to Dockerfile.

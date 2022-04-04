@@ -14,26 +14,53 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.db
+  redis:
+    image: redis:alpine
   web:
     build:
       context: ./app
       dockerfile: Dockerfile
     command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
     expose:
       - 8000
     env_file:
       - ./.env
     depends_on:
+      - redis
+      - db
+  celery:
+    build: ./app
+    command: celery -A web worker -l info
+    volumes:
+      - ./app:/home/app
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+      - db
+  celery-beat:
+    build: ./app
+    command: celery -A web beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./app:/home/app
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
       - db
   nginx:
     image: nginx:1.21-alpine
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
     ports:
       - 80:80
       - 443:443

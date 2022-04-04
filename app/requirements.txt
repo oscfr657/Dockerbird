@@ -3,6 +3,10 @@ Django
 gunicorn
 psycopg2-binary
 
+redis
+celery[redis]
+django-celery-beat
+
 pymemcache
 
 wagtail

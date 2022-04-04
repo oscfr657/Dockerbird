@@ -1,4 +1,4 @@
-todo.txt*
+todo.txt
 **.pyc
 .idea
 */node_modules/
@@ -9,3 +9,4 @@ todo.txt*
 *.psql
 *.sql
 *.dump
+celerybeat-schedule
