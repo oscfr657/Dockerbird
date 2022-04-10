@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 10 April 2022 ###
+
+    License year update.
+
 ### 5 April 2022 ###
 
     Added Django-celcery-beat with redis. Removed home/app/web mapp in docker file script.
