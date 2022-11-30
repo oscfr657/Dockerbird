@@ -1,25 +1,26 @@
-version: '3.3'
+version: '3.4'
 
 services:
   cache:
-   image: memcached
-   ports:
-     - "11211:11211"
-   entrypoint:
-    - memcached
-    - -m 64
+    image: memcached
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
   db:
     image: postgres:13-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env.db
+      - db.env
   redis:
     image: redis:alpine
   web:
+    image: web
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./app/Dockerfile
     command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/static
@@ -27,12 +28,14 @@ services:
     expose:
       - 8000
     env_file:
-      - ./.env
+      - .env
     depends_on:
       - redis
       - db
   celery:
-    build: ./app
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
     command: celery -A web worker -l info
     volumes:
       - ./app:/home/app
@@ -44,7 +47,9 @@ services:
       - redis
       - db
   celery-beat:
-    build: ./app
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
     command: celery -A web beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./app:/home/app

@@ -5,8 +5,11 @@ todo.txt
 */npm-debug.log
 .vscode
 *__pycache__
+*static
 *media
 *.psql
 *.sql
 *.dump
 celerybeat-schedule
+app
+!app/web

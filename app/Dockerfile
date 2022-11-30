@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9.6-slim
+FROM python:slim
 
 # create directory for the app user
 RUN mkdir -p /home/app
@@ -11,12 +11,14 @@ RUN mkdir $HOME/media
 WORKDIR $HOME
 
 # set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
 ENV PYTHONFAULTHANDLER 1
 
 # copy project
-COPY . $HOME
+COPY ./app $HOME
 
 # Update & upgrade image
 RUN apt update -y && apt upgrade -y
@@ -25,9 +27,9 @@ RUN apt update -y && apt upgrade -y
 RUN apt install git libmagic-dev -y
 
 # install python dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache -r requirements.txt
+RUN python -m pip install --upgrade pip
+COPY ./app/requirements.txt .
+RUN pip install --no-cache -r requirements.txt
 
 # create the app user
 RUN useradd -d /home/app app

@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  cache:
+    image: memcached
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - db.env
+  redis:
+    image: redis:alpine
+  web:
+    image: web
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 /home/app/manage.py runserver 0.0.0.0:8000 --nothreading"]
+    ports:
+      - 8000:8000
+      - 5678:5678
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+    env_file:
+      - .env
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=secretkey
+      - ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0 [::1]
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=db_name
+      - SQL_USER=db_user
+      - SQL_PASSWORD=db_password
+      - SQL_HOST=db
+      - SQL_PORT=5432
+    depends_on:
+      - redis
+      - db
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

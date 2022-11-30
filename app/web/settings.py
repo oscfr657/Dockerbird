@@ -59,14 +59,13 @@ INSTALLED_APPS = [
 
     'rest_framework',
     
+    'django_celery_beat',
+
     # custom
     'birdapp657',
     'seobird657',
     'podcastbird657',
-
     'gallery657',
-    'django_celery_beat',
-
 ]
 
 MIDDLEWARE = [
@@ -193,6 +192,8 @@ WAGTAILSEARCH_BACKENDS = {
 # WAGTAIL_USAGE_COUNT_ENABLED = True
 
 WAGTAIL_SITE_NAME = 'SiteBird'
+
+WAGTAILADMIN_BASE_URL = '/birdapp/'
 
 PASSWORD_REQUIRED_TEMPLATE = 'birdapp657_password_required.html'
 
