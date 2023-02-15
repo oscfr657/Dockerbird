@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  selector:
+    matchLabels:
+      app: django-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: django-container
+    spec:
+      containers:
+        - name: backend
+          imagePullPolicy: IfNotPresent
+          image: web
+          command: ["./manage.py", "runserver", "0.0.0.0:8000"]
+          ports:
+          - name: http
+            containerPort: 8000
+            protocol: TCP
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-settings
+                  key: secret
+            - name: DJANGO_ALLOWED_HOSTS
+              value: '*'
+            - name: SQL_DATABASE
+              value: postgres
+            - name: SQL_HOST
+              value: postgres
+            - name: SQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: SQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: REDIS_HOST
+              value: redis-service
+          volumeMounts:
+            - name: static-volume-mount
+              mountPath: /home/web/static
+              readOnly: false
+            - name: media-volume-mount
+              mountPath: /home/web/media
+              readOnly: false
+      volumes:
+        - name: static-volume-mount
+          hostPath:
+            path: /home/web/static
+        - name: media-volume-mount
+          hostPath:
+            path: /home/web/media

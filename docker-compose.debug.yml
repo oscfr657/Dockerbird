@@ -20,16 +20,16 @@ services:
     image: web
     build:
       context: .
-      dockerfile: ./app/Dockerfile
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 /home/app/manage.py runserver 0.0.0.0:8000 --nothreading"]
+      dockerfile: ./web/Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 /home/web/manage.py runserver 0.0.0.0:8000 --nothreading"]
     ports:
       - 8000:8000
       - 5678:5678
     expose:
       - 8000
     volumes:
-      - static_volume:/home/app/static
-      - media_volume:/home/app/media
+      - static_volume:/home/web/static
+      - media_volume:/home/web/media
     env_file:
       - .env
     environment:

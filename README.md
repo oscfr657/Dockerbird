@@ -27,9 +27,6 @@ A Dockerized Wagtail app
 
     LANGUAGE_CODE=sv
     TIME_ZONE=Europe/Stockholm
-
-.env.db
-
     POSTGRES_INITDB_ARGS='--locale=sv_SE'
     TZ='Europe/Stockholm'
 
@@ -80,11 +77,11 @@ A Dockerized Wagtail app
 
 ### Media export ###
 
-    docker cp dockerbird_web_1:/home/app/media .
+    docker cp dockerbird_web_1:/home/web/media .
 
 ### Media import ###
 
-    docker cp media dockerbird_web_1:/home/app/
+    docker cp media dockerbird_web_1:/home/web/
 
 ## Use Compose in production ##
 
@@ -105,3 +102,53 @@ A Dockerized Wagtail app
     docker images -f dangling=true
 
     docker image prune
+
+### Minikube ###
+
+    echo -n "secret-string" | base64
+
+    minikube delete
+
+    minikube start
+
+    eval $(minikube docker-env)
+
+    minikube dashboard
+
+    eval $(minikube docker-env)
+
+    docker-compose -f minikube.yml build --no-cache
+
+    kubectl apply -f kubernetes/postgres/
+    
+    kubectl apply -f kubernetes/redis/
+
+    kubectl apply -f kubernetes/django/
+
+    kubectl get pods
+
+    kubectl exec django-deployment-85984d6c5-89pnq -it -- bash
+
+    chown web:web -R static
+
+    chown web:web -R media
+
+    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py collectstatic
+
+    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py migrate
+
+    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py createsuperuser
+
+    minikube service kubernetes-django-service
+
+### WIP! ###
+
+    minikube addons enable ingress
+
+    kubectl apply -f kubernetes/ingress.yml
+
+    minikube ip
+
+    sudo nano /etc/hosts
+
+    192.168.49.2  minikube.localhost

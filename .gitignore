@@ -1,4 +1,5 @@
 todo.txt
+*tmp
 **.pyc
 .idea
 */node_modules/
@@ -11,5 +12,5 @@ todo.txt
 *.sql
 *.dump
 celerybeat-schedule
-app
-!app/web
+web/*/
+!web/web

@@ -39,7 +39,7 @@ SITEMAPS = {"wagtail": Sitemap}
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^sitemap\.xml$', sitemap, { 'sitemaps': SITEMAPS}),
-    path('gallery657/', include('gallery657.urls', namespace='gallery657')),
+    #path('gallery657/', include('gallery657.urls', namespace='gallery657')),
   ]
 
 urlpatterns += [
