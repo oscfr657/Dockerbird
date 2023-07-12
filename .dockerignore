@@ -25,3 +25,12 @@
 **/values.dev.yaml
 README.md
 
+
+*tmp
+**.pyc
+.idea
+*__pycache__
+
+*.psql
+*.sql
+*.dump

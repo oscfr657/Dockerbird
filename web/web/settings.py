@@ -174,6 +174,8 @@ STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'admin@example.com')
+ADMINS = [(os.environ.get('YOUR_NAME', 'Admin'), DEFAULT_FROM_EMAIL)]
 
 WAGTAILIMAGES_FORMAT_CONVERSIONS = {
     'bmp': 'webp',

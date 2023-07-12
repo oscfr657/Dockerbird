@@ -14,7 +14,7 @@ RUN useradd -d /home/web -m web
 ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONFAULTHANDLER 1
+ENV PYTHONFAULTHANDLER=1
 # copy project
 COPY --chown=web:web ./web $HOME
 # Update & upgrade image

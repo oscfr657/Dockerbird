@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 13 July 2022 ###
+
+    Small improvments to docker-compose.yaml, Dockerfile, Django settings and dockerignore.
+
 ### 10 April 2022 ###
 
     License year update.

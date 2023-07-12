@@ -1,7 +1,7 @@
 
 # Dockerbird #
 
-A Dockerized Wagtail app
+A Dockerized Django - Wagtail app
 
 ## Installation ###
 
