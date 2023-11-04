@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:slim
+FROM python:3.11-slim
 # create directory for the web user
 RUN mkdir -p /home/web
 # create the appropriate directories

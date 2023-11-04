@@ -13,9 +13,3 @@ pymemcache
 
 wagtail
 wagtailmedia
-
-git+https://github.com/oscfr657/Birdapp657.git@main
-
-git+https://github.com/oscfr657/SEOBird657.git@main
-git+https://github.com/oscfr657/PodcastBird657.git@main
-git+https://github.com/oscfr657/Gallery657.git@main

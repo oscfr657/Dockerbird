@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 04 November 2023 ###
+
+    Python 3.11 due to 3.12 bug. README cleanup. Removed extra django apps.
+
 ### 13 July 2022 ###
 
     Small improvments to docker-compose.yaml, Dockerfile, Django settings and dockerignore.

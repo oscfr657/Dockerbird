@@ -9,7 +9,7 @@ A Dockerized Django - Wagtail app
 
     https://docs.docker.com/engine/install/
 
-#### Post-installation steps for Linux ####
+#### Linux Post-installation steps ####
 
     https://docs.docker.com/engine/install/linux-postinstall/
 
@@ -32,44 +32,44 @@ A Dockerized Django - Wagtail app
 
 ### Build ###
 
-    docker-compose build --no-cache
+    docker compose build --no-cache
 
-    docker-compose up
+    docker compose up
 
 ### Collectstatic ###
 
-    docker-compose exec web python manage.py collectstatic --no-input --clear
+    docker compose exec web python manage.py collectstatic --no-input --clear
 
 ### Database migration ###
 
-    docker-compose exec web python manage.py migrate --no-input
+    docker compose exec web python manage.py migrate --no-input
 
 ### Search Index setup ###
 
-    docker-compose exec web python manage.py update_index
+    docker compose exec web python manage.py update_index
 
 ### Create a superuser ###
 
-    docker-compose exec web python manage.py createsuperuser
+    docker compose exec web python manage.py createsuperuser
 
 ## Shut down ##
 
-    # docker-compose down
+    # docker compose down
     # -v removes volumes
 
 ## Database managment ##
 
 ### Database export ###
 
-    docker exec -i dockerbird_db_1 /bin/bash -c "pg_dump --username db_user --no-owner -x db_name" > bkp.psql
+    docker exec -i dockerbird_db_1 /bin/bash -c "pg_dump --username postgres --no-owner -x dbname" > bkp.psql
 
 ### Database import ###
 
-    docker exec -i dockerbird_db_1 /bin/bash -c "PGPASSWORD=db_password psql --username db_user db_name" < bkp.psql
+    docker exec -i dockerbird_db_1 /bin/bash -c "PGPASSWORD=password psql --username postgres dbname" < bkp.psql
 
 ### Clear database ####
 
-    docker-compose exec web python manage.py flush --no-input
+    docker compose exec web python manage.py flush --no-input
 
 ## Media managment ##
 
@@ -97,11 +97,15 @@ A Dockerized Django - Wagtail app
 
     docker exec -i dockerbird_db_1 bash
 
+    docker compose exec web pip install -r requirements.txt
+
     docker exec dockerbird_web_1 ls
 
     docker images -f dangling=true
 
     docker image prune
+
+## WIP ##
 
 ### Minikube ###
 
@@ -117,7 +121,7 @@ A Dockerized Django - Wagtail app
 
     eval $(minikube docker-env)
 
-    docker-compose -f minikube.yml build --no-cache
+    docker compose -f minikube.yml build --no-cache
 
     kubectl apply -f kubernetes/postgres/
     
