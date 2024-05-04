@@ -5,7 +5,7 @@ psycopg2-binary
 
 whitenoise
 
-redis
+redis  # Change to KeyDB by Snap?
 celery[redis]
 django-celery-beat
 

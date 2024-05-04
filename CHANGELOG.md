@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 5 May 2024 ###
+
+    Minor Kubernetes volume changes. Env file and Django env settings improvements.
+
 ### 04 November 2023 ###
 
     Python 3.11 due to 3.12 bug. README cleanup. Removed extra django apps.

@@ -57,8 +57,6 @@ INSTALLED_APPS = [
 
     'wagtailmedia',
 
-    'rest_framework',
-    
     'django_celery_beat',
 
 ]
@@ -104,9 +102,9 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('SQL_DATABASE', 'dbname'),
-        'USER': os.environ.get('SQL_USER', 'postgres'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        'NAME': os.environ.get('POSTGRES_DB', 'dbname'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password'),
         'HOST': os.environ.get('SQL_HOST', 'localhost'),
         'PORT': os.environ.get('SQL_PORT', '5432'),
         }
@@ -191,10 +189,6 @@ WAGTAILSEARCH_BACKENDS = {
 # WAGTAIL_USAGE_COUNT_ENABLED = True
 
 WAGTAIL_SITE_NAME = 'SiteBird'
-
-WAGTAILADMIN_BASE_URL = '/birdapp/'
-
-PASSWORD_REQUIRED_TEMPLATE = 'birdapp657_password_required.html'
 
 
 REST_FRAMEWORK = {
