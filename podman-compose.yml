@@ -1,0 +1,76 @@
+services:
+  cache:
+    image: memcached
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
+  db:
+    image: postgres:alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+  redis:
+    image: redis:alpine
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./web:/home/web
+      - static_volume:/home/web/static
+      - media_volume:/home/web/media
+    env_file:
+      - .env
+    depends_on:
+      - cache
+      - redis
+      - db
+  celery:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    command: celery -A web worker -l info
+    volumes:
+      - ./web:/home/web
+      - static_volume:/home/web/static
+      - media_volume:/home/web/media
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+      - web
+  celery-beat:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    command: celery -A web beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./web:/home/web
+      - static_volume:/home/web/static
+      - media_volume:/home/web/media
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+      - web
+  nginx:
+    image: nginx:1.21-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/home/web/static
+      - media_volume:/home/web/media
+    ports:
+      - 8000:80
+    depends_on:
+      - web
+volumes:
+  postgres_data: {}
+  static_volume: {}
+  media_volume: {}
