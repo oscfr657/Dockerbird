@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -162,6 +165,7 @@ CACHES = {
 }
 
 LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/login/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 
@@ -190,6 +194,8 @@ WAGTAILSEARCH_BACKENDS = {
 
 WAGTAIL_SITE_NAME = 'SiteBird'
 
+WAGTAILADMIN_BASE_URL = '/wagtail/'
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
@@ -206,8 +212,20 @@ SITE_ID = 1
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
 
-
-
 #CELERY_BROKER_URL = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
 #CELERY_RESULT_BACKEND = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
+
+CELERY_BEAT_SCHEDULE = {
+    'web_publish_scheduled': {
+        'task': 'web.celery.publish_scheduled_pages',
+        'schedule': crontab(minute='1,31'),  # Schedule the task to run twice every hour
+    },
+    'web_searchpromotions_garbage_collect': {
+        'task': 'web.celery.searchpromotions_garbage_collect',
+        'schedule': crontab(minute='1,31'),  # Schedule the task to run twice every hour
+    }
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / 'emails'
 
