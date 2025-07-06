@@ -4,6 +4,14 @@
 
 ## commits ##
 
+### 6 July 2025 ###
+
+    doc: Readme improved and updated with Podman. Updated CHANGELOG.md.
+    ci: Added a compose file for rootless Podman.
+    chore: removed web/web/tasks.py
+    ci: Use db postgres:alpine. python:3.12-slim.
+    feat: Added Celery jobs publish_scheduled_pages and searchpromotions_garbage_collect.
+
 ### 5 May 2024 ###
 
     Minor Kubernetes volume changes. Env file and Django env settings improvements.
