@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   cache:
     image: memcached
@@ -9,7 +7,7 @@ services:
       - memcached
       - -m 64
   db:
-    image: postgres:13-alpine
+    image: postgres:alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
@@ -21,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: ./web/Dockerfile
-    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn web.wsgi:application --bind 0.0.0.0:80
     volumes:
       - ./web:/home/web
       - static_volume:/home/web/static
@@ -29,6 +27,7 @@ services:
     env_file:
       - .env
     depends_on:
+      - cache
       - redis
       - db
   celery:
@@ -45,6 +44,7 @@ services:
     depends_on:
       - redis
       - db
+      - web
   celery-beat:
     build:
       context: .
@@ -59,6 +59,7 @@ services:
     depends_on:
       - redis
       - db
+      - web
   nginx:
     image: nginx:1.21-alpine
     volumes:
