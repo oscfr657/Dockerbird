@@ -4,6 +4,11 @@
 
 ## commits ##
 
+### 9 July 2025 ###
+
+    doc: Updated CHANGELOG.md.
+    ci: Improved compose files to only create and use one custom image.
+
 ### 6 July 2025 ###
 
     doc: Readme improved and updated with Podman. Updated CHANGELOG.md.
