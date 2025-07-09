@@ -19,6 +19,7 @@ services:
     build:
       context: .
       dockerfile: ./web/Dockerfile
+      image: dockerbird_web:latest
     command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./web:/home/web
@@ -31,9 +32,7 @@ services:
       - redis
       - db
   celery:
-    build:
-      context: .
-      dockerfile: ./web/Dockerfile
+    image: dockerbird_web:latest
     command: celery -A web worker -l info
     volumes:
       - ./web:/home/web
@@ -46,9 +45,7 @@ services:
       - db
       - web
   celery-beat:
-    build:
-      context: .
-      dockerfile: ./web/Dockerfile
+    image: dockerbird_web:latest
     command: celery -A web beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./web:/home/web
