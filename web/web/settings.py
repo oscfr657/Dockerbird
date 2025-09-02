@@ -105,9 +105,9 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('POSTGRES_DB', 'dbname'),
-        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password'),
+        'NAME': os.environ.get('SQL_DB', 'dbname'),
+        'USER': os.environ.get('SQL_USER', 'postgres'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
         'HOST': os.environ.get('SQL_HOST', 'localhost'),
         'PORT': os.environ.get('SQL_PORT', '5432'),
         }
@@ -167,10 +167,10 @@ CACHES = {
 LOGIN_URL = '/admin/login/'
 LOGIN_REDIRECT_URL = '/admin/login/'
 
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.environ.get('STATIC_ROOT' , BASE_DIR / 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT' , BASE_DIR / 'media')
 
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'admin@example.com')
 ADMINS = [(os.environ.get('YOUR_NAME', 'Admin'), DEFAULT_FROM_EMAIL)]
@@ -209,8 +209,10 @@ REST_FRAMEWORK = {
 
 SITE_ID = 1
 
-CELERY_BROKER_URL = 'redis://redis:6379'
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
+
+REDIS_URL = 'redis://' + os.environ.get('REDIS_SERVICE_HOST', 'redis') + ':' + os.environ.get('REDIS_SERVICE_PORT', '6379')
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
 
 #CELERY_BROKER_URL = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
 #CELERY_RESULT_BACKEND = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
