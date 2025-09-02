@@ -18,8 +18,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: ./web/Dockerfile
-      image: dockerbird_web:latest
+      dockerfile: ./Dockerfile
     command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./web:/home/web
