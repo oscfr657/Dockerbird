@@ -4,6 +4,23 @@
 
 ## commits ##
 
+### 05 January 2026 ###
+
+    doc: Updated CHANGELOG.md.
+    doc: Updated README.md with Minikube rootless and Kompose etc.
+    feat: Added Minikube rootless.
+    feat: Improved podman-compose.yml with kompose labels, ports, volumes and web image name.
+    chore: improved .gitignore and .dockerignore.
+    ci: docker-compose versionless nginx:alpine.
+    feat: Nginx log off for robots.txt
+    feat: Added CSRF_TRUSTED_ORIGINS
+
+### 2 September 2025 ###
+
+    feature: Improved settings.py and .env
+    ci: Versionless nginx:alpine
+    refactor: Tiny improvement to and moved Dockerfile to root level.
+
 ### 9 July 2025 ###
 
     doc: Updated CHANGELOG.md.
