@@ -16,3 +16,4 @@ todo.txt
 celerybeat-schedule
 web/*/
 !web/web
+.bash_history
