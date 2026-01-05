@@ -26,6 +26,16 @@ https://podman.io/docs/installation
 
 https://podman-desktop.io/docs/installation/linux-install
 
+
+```bash
+    sudo apt install podman-compose
+```
+
+### Add docker.io registry ###
+
+    to /etc/containers/registries.conf
+    add unqualified-search-registries=["docker.io"]
+
 ### Build ###
 
     podman-compose -f podman-compose.yml up --build --no-cache
@@ -92,7 +102,6 @@ https://podman-desktop.io/docs/installation/linux-install
     podman-compose exec web pip install -r requirements.txt
 
     podman exec dockerbird_web_1 ls
-
 
 ## Docker ##
 
@@ -167,10 +176,6 @@ https://podman-desktop.io/docs/installation/linux-install
 
     docker compose exec web python manage.py test --keepdb appname_to_test
 
-### Use Compose in production ###
-
-    https://docs.docker.com/compose/production/
-
 ### For development ###
 
     docker volume ls
@@ -191,9 +196,17 @@ https://podman-desktop.io/docs/installation/linux-install
 
     docker system prune
 
-## WIP ##
+## Kompose ##
 
-### Minikube ###
+    https://kompose.io/user-guide/
+
+    kompose --file docker-compose.yml convert --build local -o docker-kompose
+
+    kubectl apply -f docker-kompose
+
+## Minikube ##
+
+### Rootless ###
 
     echo -n "secret-string" | base64
 
@@ -201,19 +214,78 @@ https://podman-desktop.io/docs/installation/linux-install
 
     minikube start
 
-    eval $(minikube docker-env)
+    eval $(minikube -p minikube docker-env)
+
+    minikube image ls
+
+    minikube image build -t dockerbird_web -f Dockerfile .
+
+    kubectl apply -f minikube-rootless
 
     minikube dashboard
 
-    eval $(minikube docker-env)
+    kubectl get pods
+    
+    kubectl get svc
 
-    docker compose -f minikube.yml build --no-cache
+    minikube service django
+
+    minikube service django --url
+
+    minikube stop
+
+### Collectstatic ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py collectstatic --no-input --clear
+
+### Database migration ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py makemigrations
+    
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py migrate --no-input
+
+### Search Index setup ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py update_index
+
+### Create a superuser ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py createsuperuser
+
+### Database managment ###
+
+#### Database export ####
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container postgres -- /bin/bash -c "pg_dump --username postgres --no-owner -x dbname" > bkp.psql
+
+#### Database import ####
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container postgres /bin/bash -c "PGPASSWORD=password psql --username postgres dbname" < bkp.psql
+
+### Media managment ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- ls -litra
+
+#### Media export ####
+    
+    kubectl cp django-deployment-54c5d655b8-8dll6:/home/web/media -c django .
+
+#### Media import ####
+
+    kubectl cp media django-deployment-54c5d655b8-8dll6:/home/web/ -c django
+
+
+### WIP! Rootfull ###
 
     kubectl apply -f kubernetes/postgres/
-    
+
     kubectl apply -f kubernetes/redis/
 
     kubectl apply -f kubernetes/django/
+
+    kubectl describe postgres-9b56bd76c-ntq7m
+
+    minikube service postgres-service --url
 
     kubectl get pods
 
@@ -229,7 +301,11 @@ https://podman-desktop.io/docs/installation/linux-install
 
     kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py createsuperuser
 
-    minikube service kubernetes-django-service
+    kubectl create ns dockerbird
+    
+    kubectl apply -f kubernetes/nginx/
+
+    kubectl port-forward service/nginx-service 8080:80
 
 ### WIP! ###
 
