@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: media-pv
+  labels:
+    type: local
+    app: dockerbird
+spec:
+  storageClassName: media-storage
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /home/web//media

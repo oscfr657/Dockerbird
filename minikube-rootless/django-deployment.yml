@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  hostname: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+        - name: django
+          imagePullPolicy: IfNotPresent
+          image: dockerbird_web
+          command: ["gunicorn", "web.wsgi:application", "--bind", "0.0.0.0:8000"]
+          ports:
+          - containerPort: 8000
+            protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: django-settings
+          - secretRef:
+              name: django-secrets
+          env:
+            - name: SQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: SQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: static-volume-mount
+              mountPath: /home/web/static
+              readOnly: false
+            - name: media-volume-mount
+              mountPath: /home/web/media
+              readOnly: false
+        - name: postgres
+          image: postgres:alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: postgres-port
+          envFrom:
+          - secretRef:
+              name: postgres-secrets
+          env:
+            - name: POSTGRES_DB
+              value: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/postgresql
+        - command:
+            - memcached
+            - -m 64
+          image: memcached
+          name: cache
+          ports:
+            - containerPort: 11211
+              protocol: TCP
+        - name: redis
+          image: redis
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+          ports:
+          - containerPort: 6379
+      restartPolicy: Always
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+        - name: static-volume-mount
+          persistentVolumeClaim:
+            claimName: static-pvc
+        - name: media-volume-mount
+          persistentVolumeClaim:
+            claimName: media-pvc

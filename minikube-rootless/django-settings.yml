@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-settings
+data:
+  DEBUG: "1"
+  STATIC_ROOT: "/home/web/static"
+  MEDIA_ROOT: "/home/web/media"
+  DJANGO_ALLOWED_HOSTS: "*"
+  SQL_DB: "dbname"
+  SQL_HOST: "localhost"
