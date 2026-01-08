@@ -4,7 +4,14 @@
 
 ## commits ##
 
-### 05 January 2026 ###
+### 8 January 2026 ###
+
+    doc: Updated CHANGELOG.md.
+    doc: Changed Kompose outpath part of README.md.
+    ci: Removed kubernetes wip alternative to use Kompose instead.
+    ci: Improved docker-compose.yml with Kompose labels, ports, deploy resources and web image name.
+
+### 5 January 2026 ###
 
     doc: Updated CHANGELOG.md.
     doc: Updated README.md with Minikube rootless and Kompose etc.
