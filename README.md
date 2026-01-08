@@ -200,7 +200,7 @@ https://podman-desktop.io/docs/installation/linux-install
 
     https://kompose.io/user-guide/
 
-    kompose --file docker-compose.yml convert --build local -o docker-kompose
+    kompose --file docker-compose.yml convert --build local -o kubernetes/
 
     kubectl apply -f docker-kompose
 
