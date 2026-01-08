@@ -1,5 +1,7 @@
 services:
   cache:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
     image: memcached
     ports:
       - "11211:11211"
@@ -7,20 +9,48 @@ services:
       - memcached
       - -m 64
   db:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
+      kompose.volume.type: persistentVolumeClaim
     image: postgres:alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
+    ports:
+      - "5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 200M
+        reservations:
+          cpus: '0.05'
+          memory: 100M
   redis:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
     image: redis:alpine
+    ports:
+      - "6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 200M
+        reservations:
+          cpus: '0.05'
+          memory: 100M
   web:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
+      kompose.volume.type: persistentVolumeClaim
     restart: always
     build:
       context: .
       dockerfile: ./web/Dockerfile
-      image: dockerbird_web:latest
-    command: gunicorn web.wsgi:application --bind 0.0.0.0:80
+    image: dockerbird_web:latest
+    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./web:/home/web
       - static_volume:/home/web/static
@@ -31,7 +61,12 @@ services:
       - cache
       - redis
       - db
+    ports:
+      - "8000"
   celery:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
+      kompose.volume.type: persistentVolumeClaim
     image: dockerbird_web:latest
     command: celery -A web worker -l info
     volumes:
@@ -44,7 +79,12 @@ services:
       - redis
       - db
       - web
+    ports:
+      - "8001"
   celery-beat:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
+      kompose.volume.type: persistentVolumeClaim
     image: dockerbird_web:latest
     command: celery -A web beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
@@ -57,14 +97,19 @@ services:
       - redis
       - db
       - web
+    ports:
+      - "8002"
   nginx:
+    labels:
+      kompose.image-pull-policy: "IfNotPresent"
+      kompose.volume.type: persistentVolumeClaim
     image: nginx:alpine
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - static_volume:/home/web/static
       - media_volume:/home/web/media
     ports:
-      - 80:80
+      - 8000:80
     depends_on:
       - web
 volumes:
