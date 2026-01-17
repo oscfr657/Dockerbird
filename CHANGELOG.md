@@ -4,6 +4,11 @@
 
 ## commits ##
 
+### 17 January 2026 ###
+
+    doc: Updated CHANGELOG.md.
+    fix: Podman web volumes path fix.
+
 ### 8 January 2026 ###
 
     doc: Updated CHANGELOG.md.
