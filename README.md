@@ -36,6 +36,12 @@ https://podman-desktop.io/docs/installation/linux-install
     to /etc/containers/registries.conf
     add unqualified-search-registries=["docker.io"]
 
+### Set KeyDB ###
+
+.env
+
+    REDIS_SERVICE_HOST=keydb
+
 ### Build ###
 
     podman-compose -f podman-compose.yml up --build --no-cache
@@ -79,6 +85,14 @@ https://podman-desktop.io/docs/installation/linux-install
 ### Create a superuser ###
 
     podman-compose exec web python manage.py createsuperuser
+
+### View KeyDB stats info ###
+
+    podman-compose exec keydb keydb-cli --stat
+
+### KeyDB container stats ###
+
+    podman-compose stats keydb
 
 ### Run Tests ###
 

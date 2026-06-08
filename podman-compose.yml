@@ -16,10 +16,13 @@ services:
       - .env
     ports:
       - "5432"
-  redis:
-    image: redis:alpine
+  keydb:
+    image: eqalpha/keydb:latest
+    container_name: keydb_cache
+    command: keydb-server --server-threads 2 --save ""
     ports:
-      - "6379"
+      - "6379:6379"
+    restart: unless-stopped
   web:
     labels:
       kompose.image-pull-policy: "IfNotPresent"
@@ -38,7 +41,7 @@ services:
       - .env
     depends_on:
       - cache
-      - redis
+      - keydb
       - db
     ports:
       - "8000"
@@ -55,7 +58,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
+      - keydb
       - db
       - web
     ports:
@@ -73,7 +76,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
+      - keydb
       - db
       - web
     ports:

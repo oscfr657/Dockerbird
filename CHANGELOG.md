@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 8 June 2026 ###
+
+    feat: Changed from redis to KeyDB in podman-compose.
+
 ### 17 January 2026 ###
 
     doc: Updated CHANGELOG.md.
