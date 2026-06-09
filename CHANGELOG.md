@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 9 June 2026 ###
+
+    feat: Changed to ASGI for podman.
+
 ### 8 June 2026 ###
 
     feat: Changed from redis to KeyDB in podman-compose.

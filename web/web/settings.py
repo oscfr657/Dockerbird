@@ -101,6 +101,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'web.wsgi.application'
 
+ASGI_APPLICATION = 'web.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -229,6 +230,12 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute='1,31'),  # Schedule the task to run twice every hour
     }
 }
+
+
+USE_X_FORWARDED_PORT = True
+USE_X_FORWARDED_HOST = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / 'emails'
