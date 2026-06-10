@@ -1,9 +1,8 @@
-
 Django
 gunicorn
 uvicorn[standard]
 uvicorn-worker
-psycopg2-binary
+psycopg[binary]
 
 whitenoise
 

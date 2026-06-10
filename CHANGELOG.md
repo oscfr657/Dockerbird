@@ -4,6 +4,10 @@
 
 ## commits ##
 
+### 10 June 2026 ###
+
+    chore(deps): Upgraded psycopg from 2 to 3.
+
 ### 9 June 2026 ###
 
     feat: Changed to ASGI for podman.
