@@ -6,9 +6,10 @@ psycopg[binary]
 
 whitenoise
 
-redis  # Change to KeyDB by Snap?
+redis  # KeyDB by Snap is used in the podman backend.
 celery[redis]
 django-celery-beat
+hiredis
 
 pymemcache
 
