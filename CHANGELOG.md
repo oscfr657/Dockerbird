@@ -4,6 +4,12 @@
 
 ## commits ##
 
+### 08 July 2026 ###
+
+    doc: Updated CHANGELOG.md.
+    chore: cleanup of gitignore
+    chore(deps): added hiredis to requirements
+
 ### 10 June 2026 ###
 
     chore(deps): Upgraded psycopg from 2 to 3.
