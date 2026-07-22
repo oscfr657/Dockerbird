@@ -9,7 +9,7 @@ services:
   db:
     image: postgres:alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/
     env_file:
       - .env
   redis:
