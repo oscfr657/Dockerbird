@@ -50,11 +50,12 @@ services:
       context: .
       dockerfile: ./Dockerfile
     image: dockerbird_web:latest
-    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn web.asgi:application --workers 4 --worker-class uvicorn_worker.UvicornWorker --bind unix:/sockets/gunicorn.sock
     volumes:
       - ./web:/home/web
       - static_volume:/home/web/static
       - media_volume:/home/web/media
+      - socket_volume:/sockets
     env_file:
       - .env
     depends_on:
@@ -73,6 +74,7 @@ services:
       - ./web:/home/web
       - static_volume:/home/web/static
       - media_volume:/home/web/media
+      - socket_volume:/sockets
     env_file:
       - .env
     depends_on:
@@ -91,6 +93,7 @@ services:
       - ./web:/home/web
       - static_volume:/home/web/static
       - media_volume:/home/web/media
+      - socket_volume:/sockets
     env_file:
       - .env
     depends_on:
@@ -108,6 +111,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - static_volume:/home/web/static
       - media_volume:/home/web/media
+      - socket_volume:/sockets
     ports:
       - 8000:80
     depends_on:
@@ -116,3 +120,4 @@ volumes:
   postgres_data: {}
   static_volume: {}
   media_volume: {}
+  socket_volume: {}
