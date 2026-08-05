@@ -4,6 +4,23 @@
 
 ## commits ##
 
+### 05 August 2026 ###
+
+    doc: Updated CHANGELOG.md
+    doc: Cleanup and improved README.md
+    chore: Removed entrypoint.sh
+    feat: Changed from redis to KeyDB in minikube.
+    chore: settings cleanup
+    chore: env cleanup
+    chore: podman-compose.yml keydb cleanup
+
+### 22 July 2026 ###
+
+    feat(Docker): keydb
+    fix(Docker): Django asgi and gunicorn socket file
+    fix(Docker): web build image dockerfile path
+    fix(Docker): Postgres volume postgres_data path bug
+
 ### 08 July 2026 ###
 
     doc: Updated CHANGELOG.md.
