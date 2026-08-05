@@ -18,11 +18,10 @@ services:
       - "5432"
   keydb:
     image: eqalpha/keydb:latest
-    container_name: keydb_cache
     command: keydb-server --server-threads 2 --save ""
     ports:
       - "6379:6379"
-    restart: unless-stopped
+    restart: always
   web:
     labels:
       kompose.image-pull-policy: "IfNotPresent"
