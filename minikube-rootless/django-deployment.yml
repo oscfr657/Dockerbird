@@ -77,8 +77,8 @@ spec:
           ports:
             - containerPort: 11211
               protocol: TCP
-        - name: redis
-          image: redis
+        - name: keydb
+          image: eqalpha/keydb:latest
           resources:
             requests:
               cpu: 50m
