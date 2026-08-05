@@ -20,27 +20,22 @@ A Dockerized Django - Wagtail app
 
 ### Install ###
 
-https://flatpak.org/setup/
-
 https://podman.io/docs/installation
-
-https://podman-desktop.io/docs/installation/linux-install
-
 
 ```bash
     sudo apt install podman-compose
 ```
 
+#### Optional ####
+
+https://flatpak.org/setup/
+
+https://podman-desktop.io/docs/installation/linux-install
+
 ### Add docker.io registry ###
 
     to /etc/containers/registries.conf
     add unqualified-search-registries=["docker.io"]
-
-### Set KeyDB ###
-
-.env
-
-    REDIS_SERVICE_HOST=keydb
 
 ### Build ###
 
@@ -126,10 +121,6 @@ https://podman-desktop.io/docs/installation/linux-install
 #### Linux Post-installation steps ####
 
     https://docs.docker.com/engine/install/linux-postinstall/
-
-### Install Docker-compose ###
-
-    https://docs.docker.com/compose/install/
 
 ### Build ###
 
@@ -220,7 +211,9 @@ https://podman-desktop.io/docs/installation/linux-install
 
 ## Minikube ##
 
-### Rootless ###
+    https://minikube.sigs.k8s.io/docs/
+
+    sudo snap install kubectl
 
     echo -n "secret-string" | base64
 
@@ -288,18 +281,7 @@ https://podman-desktop.io/docs/installation/linux-install
 
     kubectl cp media django-deployment-54c5d655b8-8dll6:/home/web/ -c django
 
-
-### WIP! Rootfull ###
-
-    kubectl apply -f kubernetes/postgres/
-
-    kubectl apply -f kubernetes/redis/
-
-    kubectl apply -f kubernetes/django/
-
-    kubectl describe postgres-9b56bd76c-ntq7m
-
-    minikube service postgres-service --url
+### For development ###
 
     kubectl get pods
 
@@ -321,7 +303,19 @@ https://podman-desktop.io/docs/installation/linux-install
 
     kubectl port-forward service/nginx-service 8080:80
 
-### WIP! ###
+## TODO ##
+
+### Debuging ###
+
+ipdb?
+
+django-environ?
+
+[python-decouple · PyPI](https://pypi.org/project/python-decouple/)
+
+### Minikube ###
+
+    ingress - portforward ?
 
     minikube addons enable ingress
 
