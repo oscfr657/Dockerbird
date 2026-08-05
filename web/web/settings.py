@@ -218,8 +218,6 @@ REDIS_URL = 'redis://' + os.environ.get('REDIS_SERVICE_HOST', 'redis') + ':' + o
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
 
-#CELERY_BROKER_URL = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
-#CELERY_RESULT_BACKEND = f"redis://{os.environ.get('REDIS_SERVICE_HOST')}/1"  # noqa
 
 CELERY_BEAT_SCHEDULE = {
     'web_publish_scheduled': {
@@ -235,7 +233,6 @@ CELERY_BEAT_SCHEDULE = {
 
 USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
