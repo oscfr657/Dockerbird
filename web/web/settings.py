@@ -217,15 +217,15 @@ SITE_ID = 1
 REDIS_URL = 'redis://' + os.environ.get('REDIS_SERVICE_HOST', 'redis') + ':' + os.environ.get('REDIS_SERVICE_PORT', '6379')
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
-
+CELERY_TIMEZONE = TIME_ZONE
 
 CELERY_BEAT_SCHEDULE = {
     'web_publish_scheduled': {
-        'task': 'web.celery.publish_scheduled_pages',
+        'task': 'web.tasks.publish_scheduled_pages',
         'schedule': crontab(minute='1,31'),  # Schedule the task to run twice every hour
     },
     'web_searchpromotions_garbage_collect': {
-        'task': 'web.celery.searchpromotions_garbage_collect',
+        'task': 'web.tasks.searchpromotions_garbage_collect',
         'schedule': crontab(minute='1,31'),  # Schedule the task to run twice every hour
     }
 }
