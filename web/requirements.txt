@@ -6,7 +6,7 @@ psycopg[binary]
 
 whitenoise
 
-redis  # KeyDB by Snap is used in the podman backend.
+redis  # Valkey is used in the backend.
 celery[redis]
 django-celery-beat
 hiredis

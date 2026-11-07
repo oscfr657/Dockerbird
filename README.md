@@ -81,13 +81,13 @@ https://podman-desktop.io/docs/installation/linux-install
 
     podman-compose exec web python manage.py createsuperuser
 
-### View KeyDB stats info ###
+### View Valkey stats info ###
 
-    podman-compose exec keydb keydb-cli --stat
+    podman-compose exec valkey valkey-cli --stat
 
-### KeyDB container stats ###
+### Valkey container stats ###
 
-    podman-compose stats keydb
+    podman-compose stats valkey
 
 ### Run Tests ###
 

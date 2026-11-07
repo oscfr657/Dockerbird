@@ -77,8 +77,8 @@ spec:
           ports:
             - containerPort: 11211
               protocol: TCP
-        - name: keydb
-          image: eqalpha/keydb:latest
+        - name: valkey
+          image: valkey/valkey:latest
           resources:
             requests:
               cpu: 50m

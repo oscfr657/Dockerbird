@@ -12,8 +12,8 @@ services:
       - postgres_data:/var/lib/postgresql/
     env_file:
       - .env
-  keydb:
-    image: eqalpha/keydb:latest
+  valkey:
+    image: valkey/valkey:latest
   web:
     restart: always
     build:
@@ -42,7 +42,7 @@ services:
       - SQL_HOST=db
       - SQL_PORT=5432
     depends_on:
-      - keydb
+      - valkey
       - db
 volumes:
   postgres_data:

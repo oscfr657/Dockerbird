@@ -9,3 +9,6 @@ data:
   DJANGO_ALLOWED_HOSTS: "*"
   SQL_DB: "dbname"
   SQL_HOST: "localhost"
+
+  REDIS_SERVICE_HOST: "valkey"
+  REDIS_SERVICE_PORT: "6379"

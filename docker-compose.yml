@@ -27,10 +27,10 @@ services:
         reservations:
           cpus: '0.05'
           memory: 100M
-  keydb:
+  valkey:
     labels:
       kompose.image-pull-policy: "IfNotPresent"
-    image: eqalpha/keydb:latest
+    image: valkey/valkey:latest
     ports:
       - "6379"
     deploy:
@@ -60,7 +60,7 @@ services:
       - .env
     depends_on:
       - cache
-      - keydb
+      - valkey
       - db
     ports:
       - "8000"
@@ -78,7 +78,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - keydb
+      - valkey
       - db
       - web
     ports:
@@ -97,7 +97,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - keydb
+      - valkey
       - db
       - web
     ports:
