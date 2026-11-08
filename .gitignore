@@ -21,6 +21,8 @@ todo.txt
 *.sql
 *.dump
 
+logs.txt
+
 celerybeat-schedule
 
 *static

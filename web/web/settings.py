@@ -234,7 +234,18 @@ CELERY_BEAT_SCHEDULE = {
 USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
 
-
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND",'')
 EMAIL_FILE_PATH = BASE_DIR / 'emails'
 
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+
+DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
+SERVER_EMAIL = os.environ.get("EMAIL_HOST_USER")
+ADMINS = (
+  ('Login Admin', os.environ.get("EMAIL_HOST_USER")),
+)
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL = True

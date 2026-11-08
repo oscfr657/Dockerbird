@@ -27,6 +27,9 @@ README.md
 *.bash_history
 *entrypoint.sh
 
+**/.cache
+**/node_modules
+**/.git
 
 *tmp
 **.pyc

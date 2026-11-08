@@ -55,7 +55,15 @@ https://podman-desktop.io/docs/installation/linux-install
 
 #### Database export ####
 
-    podman exec -i dockerbird_db_1 /bin/bash -c "pg_dump --username postgres --no-owner -x dbname" > bkp.psql
+    podman exec -i dockerbird_db_1 pg_dump --username postgres --no-owner -x dbname > bkp.psql
+
+#### Drop Database ####
+
+    podman exec -i dockerbird_db_1 dropdb -U postgres dbname
+
+#### Recreate a database #### 
+
+    podman exec -i dockerbird_db_1 createdb -U postgres dbname
 
 #### Database import ####
 
@@ -111,6 +119,8 @@ https://podman-desktop.io/docs/installation/linux-install
     podman-compose exec web pip install -r requirements.txt
 
     podman exec dockerbird_web_1 ls
+
+    podman restart dockerbird_web_1
 
 ## Docker ##
 
@@ -215,8 +225,6 @@ https://podman-desktop.io/docs/installation/linux-install
 
     sudo snap install kubectl
 
-    echo -n "secret-string" | base64
-
     minikube delete
 
     minikube start
@@ -281,6 +289,10 @@ https://podman-desktop.io/docs/installation/linux-install
 
     kubectl cp media django-deployment-54c5d655b8-8dll6:/home/web/ -c django
 
+### Run tests ###
+
+    kubectl exec -i -t django-deployment-54c5d655b8-8dll6 --container django -- python manage.py test --keepdb appname_to_test
+
 ### For development ###
 
     kubectl get pods
@@ -291,18 +303,6 @@ https://podman-desktop.io/docs/installation/linux-install
 
     chown web:web -R media
 
-    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py collectstatic
-
-    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py migrate
-
-    kubectl exec django-deployment-85984d6c5-89pnq -it -- ./manage.py createsuperuser
-
-    kubectl create ns dockerbird
-    
-    kubectl apply -f kubernetes/nginx/
-
-    kubectl port-forward service/nginx-service 8080:80
-
 ## TODO ##
 
 ### Debuging ###
@@ -312,17 +312,3 @@ ipdb?
 django-environ?
 
 [python-decouple · PyPI](https://pypi.org/project/python-decouple/)
-
-### Minikube ###
-
-    ingress - portforward ?
-
-    minikube addons enable ingress
-
-    kubectl apply -f kubernetes/ingress.yml
-
-    minikube ip
-
-    sudo nano /etc/hosts
-
-    192.168.49.2  minikube.localhost
