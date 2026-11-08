@@ -4,6 +4,19 @@
 
 ## commits ##
 
+### 07 November 2026 ###
+
+    doc: updated LICENSE year and CHANGELOG.md
+    ci: cleanup and some quality improvements
+    fix(minikube): changed from wsgi to asgi
+    feat: changed from keyDB to valkey
+
+### 03 November 2026 ###
+
+    ci: increased python version from 3.12 to 3.15
+    feat: added a example.env and added env to gitignore
+    refactory: moved celery tasks from celery.py to a tasks.py
+
 ### 05 August 2026 ###
 
     doc: Updated CHANGELOG.md
